@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Default ignored files
+.idea\shelf
+.idea\workspace.xml
+fly.toml
