@@ -6,6 +6,7 @@ import com.wingom.bankcardapi.application.dto.CardBalanceOutputDTO;
 import com.wingom.bankcardapi.application.dto.CardBalanceRechargeDTO;
 import com.wingom.bankcardapi.application.dto.CardActivationInputDTO;
 import com.wingom.bankcardapi.application.usecases.ICardUseCase;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +46,7 @@ public class CardController {
     }
 
     @PostMapping("/balance")
-    public ResponseEntity<CardDTO> rechargeCard(@RequestBody CardBalanceRechargeDTO cardBalanceRechargeDTO) {
+    public ResponseEntity<CardDTO> rechargeCard(@Valid @RequestBody CardBalanceRechargeDTO cardBalanceRechargeDTO) {
         CardDTO cardDTO = cardUseCase.rechargeCard(cardBalanceRechargeDTO.getCardId(), cardBalanceRechargeDTO.getBalance());
         return new ResponseEntity<>(cardDTO, HttpStatus.OK);
     }

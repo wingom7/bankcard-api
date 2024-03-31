@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.4'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'jacoco'
 }
 
 group = 'com.wingom'
@@ -9,6 +10,24 @@ version = '0.0.1-SNAPSHOT'
 
 java {
 	sourceCompatibility = '17'
+}
+
+test {
+	finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+	reports {
+		xml.required = false
+		csv.required = false
+		html.outputLocation = layout.buildDirectory.dir('reports/jacoco/test/jacocoHtml')
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
 }
 
 repositories {
@@ -27,10 +46,17 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.postgresql:postgresql'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mockito:mockito-core:5.7.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+	testImplementation 'org.jacoco:org.jacoco.core:0.8.7'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+bootRun {
 }
